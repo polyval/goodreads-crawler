@@ -4,22 +4,31 @@ __author__ = 'Lucien Zhou'
 import requests
 from bs4 import BeautifulSoup
 import re
+import random
+import datetime
 from openpyxl import Workbook
 
 
 def book_info(genre):
     page_num = 1
     book_set = set()
+    
+    User_Agents = ['Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36',
+                  'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11',
+                  'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)',
+                 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6']
 
-    while page_num <= 100:
+    random.seed(datetime.datetime.now())
+    while page_num <= 3:
         url = 'https://www.goodreads.com/shelf/show/' + \
             genre+'?page='+str(page_num)
 
+    
         header = {'Host': 'www.goodreads.com',
                   'Connection': 'keep-alive',
                   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                  'User-Agent': ' Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1941.0 Safari/537.36',
-                  'Referer': 'https://www.goodreads.com/shelf/show/sociology?page=1',
+                  'User-Agent': User_Agents[random.randint(0,3)],
+                  'Referer': 'https://www.goodreads.com/shelf/show/sociology?page= %d' % page_num,
                   'Accept-Encoding': 'gzip,deflate,sdch',
                   'Accept-Language': ' zh-CN,zh;q=0.8,en;q=0.6',
                   'Cookie': 'csid=BAhJIhg0NzQtNjcxMzMzNy00NjM0NDgyBjoGRVQ%3D--658f4a016547bd627eb691ae1cb3e45e7e9bbd22; __qca=P0-672534077-1442308562125; aa_signed_outCell=in_exp; u=qTZQbGvz_AnvYgq_hGxcL0g6Z-Ivm_s7jHyD5LGDRKWmU3Z8; p=u_bRSYuFrAOJSVq8bV8RtdelpMGU4T1PNNfRWcHsq6XXHjVB; locale=en; __utmt=1; _session_id2=b68c2e32749ef8c8c05d21b3e61809de; __utma=250562704.1646777348.1442308563.1447842448.1447848289.22; __utmb=250562704.8.10.1447848289; __utmc=250562704; __utmz=250562704.1446710704.14.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)'}
