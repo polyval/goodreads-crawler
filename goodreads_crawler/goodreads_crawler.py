@@ -43,12 +43,12 @@ def book_info(genre):
         for book_title in soup.find_all("a", {"class": "leftAlignedImage"}):
             try:
                 title = book_title["title"]
-            except:
+            except Exception:
                 pass
             try:
                 author = book_title.find_next("span", {"itemprop": "name"})
                 author_name = author.text
-            except:
+            except Exception:
                 pass
             try:
                 rating_info = author.find_next(
